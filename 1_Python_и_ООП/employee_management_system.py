@@ -1,7 +1,16 @@
+from abc import ABC, abstractmethod
+
+# абстрактный класс SalaryCalculator,
+# который будет определять метод calculate_salary.
+class SalaryCalculator(ABC):
+    @abstractmethod
+    def calculate_salary(self):
+        pass
+
 # базовый класс Employee,
 # который будет содержать общие атрибуты
 # и методы для всех сотрудников
-class Employee:
+class Employee(SalaryCalculator):
     def __init__(self, name, employee_id):
         self.name = name
         self.employee_id = employee_id
@@ -11,17 +20,24 @@ class Employee:
     
     def calculate_salary(self):
         raise NotImplementedError("Метод calculate_salary должен быть реализован в дочернем классе")
-    
+
+# Создадим миксин Loggable,
+# который будет добавлять функциональность логирования.
+class Loggable:
+    def log(self, message):
+        print(f"Лог: {message}")
+
 # класс Manager наследует от Employee
 # и добавляет атрибут bonus (бонус),
 # а также реализует метод calculate_salary
-class Manager(Employee):
+class Manager(Employee, Loggable):
     def __init__(self, name, employee_id, salary, bonus):
         super().__init__(name, employee_id)
         self.salary = salary
         self.bonus = bonus
 
     def calculate_salary(self):
+        self.log(f"Расчет зарплаты для менеджера {self.name}")
         return self.salary + self.bonus
     
     def display_info(self):
@@ -57,6 +73,7 @@ class Intern(Employee):
     def display_info(self):
         return f"{super().display_info()}, Должность: Стажер, Зарплата: {self.calculate_salary()}"
 
+
 # Пример использования
 # Создание объектов
 manager = Manager("Иван Иванов", 1, 50000, 10000)
@@ -67,3 +84,6 @@ intern = Intern("Алексей Алексеев", 3, 10000)
 employees = [manager, developer, intern]
 for employee in employees:
     print(employee.display_info())
+
+print()
+print(manager.display_info())
