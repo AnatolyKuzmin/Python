@@ -9,7 +9,7 @@
 - 4: Проект To-Do List
 
 
-[**2. База данных и SQL>**](https://github.com/AnatolyKuzmin/Python/tree/main/2_БД_и_SQL) <br>
+[**2. База данных и SQL**](https://github.com/AnatolyKuzmin/Python/tree/main/2_БД_и_SQL) <br>
 Цель: Освоить продвинутые концепции Python, включая ООП, декораторы, генераторы и работу с исключениями.  <br>
 - 1: Введение в SQL. <br>
 - 2: SQL в Python. <br>
