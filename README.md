@@ -17,8 +17,10 @@
 - 4: Проект
 
 
-[**3. Веб-разработка (Flask/Django)**]([https://github.com/AnatolyKuzmin/Python/tree/main/2_БД_и_SQL]) <br>
-Цель: Научиться работать с базами данных, писать SQL-запросы и использовать ORM.  <br>
+
+
+[**3. Веб-разработка (Flask/Django)**](https://github.com/AnatolyKuzmin/Python/tree/main/3_Веб-разработка_(Flask_Django)) <br>
+Цель: Освоить основы веб-разработки с использованием Flask или Django.  <br>
 - 1: Введение в Flask. <br>
 - 2: Работа с базами данных в Flask. <br>
 - 3: Django Basics. <br>
