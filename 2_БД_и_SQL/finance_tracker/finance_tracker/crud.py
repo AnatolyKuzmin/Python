@@ -3,6 +3,8 @@ from sqlalchemy.orm import Session
 from . import models
 from sqlalchemy import and_
 from datetime import datetime
+from sqlalchemy import desc
+from sqlalchemy.exc import SQLAlchemyError
 
 def create_user(db: Session, name: str, email: str):
     user = models.User(name=name, email=email)
@@ -55,3 +57,64 @@ def get_transactions_by_category(db: Session, user_id: int, category_id: int):
             models.Transaction.category_id == category_id
         )
     ).all()
+
+def update_transaction(db: Session, transaction_id: int, amount: float = None, type: str = None, category_id: int = None):
+    transaction = db.query(models.Transaction).filter(models.Transaction.id == transaction_id).first()
+    if not transaction:
+        return None
+
+    if amount is not None:
+        transaction.amount = amount
+    if type is not None:
+        transaction.type = type
+    if category_id is not None:
+        transaction.category_id = category_id
+
+    db.commit()
+    db.refresh(transaction)
+    return transaction
+
+def delete_transaction(db: Session, transaction_id: int):
+    transaction = db.query(models.Transaction).filter(models.Transaction.id == transaction_id).first()
+    if not transaction:
+        return False
+
+    db.delete(transaction)
+    db.commit()
+    return True
+
+def get_transactions_by_type(db: Session, user_id: int, transaction_type: str):
+    return db.query(models.Transaction).filter(
+        and_(
+            models.Transaction.user_id == user_id,
+            models.Transaction.type == transaction_type
+        )
+    ).all()
+
+def get_transactions_sorted(db: Session, user_id: int, sort_by: str = "date", order: str = "asc"):
+    query = db.query(models.Transaction).filter(models.Transaction.user_id == user_id)
+
+    if sort_by == "date":
+        if order == "asc":
+            query = query.order_by(models.Transaction.date)
+        else:
+            query = query.order_by(desc(models.Transaction.date))
+    elif sort_by == "amount":
+        if order == "asc":
+            query = query.order_by(models.Transaction.amount)
+        else:
+            query = query.order_by(desc(models.Transaction.amount))
+
+    return query.all()
+
+def create_user(db: Session, name: str, email: str):
+    try:
+        user = models.User(name=name, email=email)
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+        return user
+    except SQLAlchemyError as e:
+        db.rollback()
+        print(f"Ошибка при создании пользователя: {e}")
+        return None
