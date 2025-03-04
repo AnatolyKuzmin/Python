@@ -15,3 +15,11 @@
 - 2: SQL в Python. <br>
 - 3: ORM (SQLAlchemy). <br>
 - 4: Проект
+
+
+[**3. Веб-разработка (Flask/Django)**]([https://github.com/AnatolyKuzmin/Python/tree/main/2_БД_и_SQL](https://github.com/AnatolyKuzmin/Python/tree/main/3_Веб-разработка_(Flask_Django))) <br>
+Цель: Научиться работать с базами данных, писать SQL-запросы и использовать ORM.  <br>
+- 1: ВВведение в Flask. <br>
+- 2: Работа с базами данных в Flask. <br>
+- 3: Django Basics. <br>
+- 4: Проект
