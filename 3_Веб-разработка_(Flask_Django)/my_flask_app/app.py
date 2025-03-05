@@ -27,6 +27,20 @@ def form():
         </form>
     """
 
+# Пример данных о пользователях
+users = {
+    1: {"name": "Иван", "age": 25},
+    2: {"name": "Мария", "age": 30}
+}
+
+# Использование переменных в маршрутах
+@app.route("/user/<int:user_id>")
+def get_user(user_id):
+    user = users.get(user_id)
+    if user:
+        return f"Пользователь: {user['name']}, Возраст: {user['age']}"
+    return "Пользователь не найден", 404
+
 # Запускаем приложение
 if __name__ == "__main__":
     app.run(debug=True)
