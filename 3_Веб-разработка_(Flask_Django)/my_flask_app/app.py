@@ -1,46 +1,10 @@
-from flask import Flask, request
+from flask import Flask, render_template
 
-# Создаем экземпляр приложения Flask
 app = Flask(__name__)
 
-# Определяем маршрут для главной страницы
 @app.route("/")
 def home():
-    return "Hello, World!"
+    return render_template("index.html", name="Иван")
 
-# Создаём маршрут с параметрами
-@app.route("/user/<name>")
-def greet_user(name):
-    return f"Привет, {name}!"
-
-# Обработка различных HTTP-методов
-@app.route("/form", methods=["GET", "POST"])
-def form():
-    if request.method == "POST":
-        name = request.form.get("name")
-        return f"Привет, {name} (POST)!"
-    return """
-        <form method="post">
-            <label for="name">Имя:<label>
-            <input type="text" id="name" name="name">
-            <button type="submit">Отправить</button>
-        </form>
-    """
-
-# Пример данных о пользователях
-users = {
-    1: {"name": "Иван", "age": 25},
-    2: {"name": "Мария", "age": 30}
-}
-
-# Использование переменных в маршрутах
-@app.route("/user/<int:user_id>")
-def get_user(user_id):
-    user = users.get(user_id)
-    if user:
-        return f"Пользователь: {user['name']}, Возраст: {user['age']}"
-    return "Пользователь не найден", 404
-
-# Запускаем приложение
 if __name__ == "__main__":
     app.run(debug=True)
