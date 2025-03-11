@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.title }}</title>
+</head>
+<body>
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.content }}</p>
+
+    <h2>Комментарии</h2>
+    <ul>
+        {% for comment in post.comments %}
+            <li>{{ comment.content }}</li>
+        {% endfor %}
+    </ul>
+
+    <form method="POST" action="{{ url_for('add_comment', post_id=post.id) }}">
+        <textarea name="content" placeholder="Ваш комментарий" required></textarea>
+        <button type="submit">Добавить комментарий</button>
+    </form>
+
+    <a href="{{ url_for('home') }}">Назад к списку постов</a>
+</body>
+</html>
